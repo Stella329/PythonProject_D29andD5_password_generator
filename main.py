@@ -62,7 +62,6 @@ def save_password(web_input, email_input, pw_input):
             pw_df.to_csv(csv_file, mode='a',index=False, header=False)
 
         print(pw_df)
-        print(csv_file)
 
 
 # MY METHOD: 想直接用CSV-> dataframe，但是有问题
@@ -105,16 +104,18 @@ def action_add():
 
 
     # POP-UP WINDOWS: messagebox
-    messagebox.askokcancel(title='Check Your Password', message=(f'Your password details are as follow: \nWebsite: {web_input} \nEmail: {email_input} \nPassword: {pw_input}  '))
-    if len(web_input) == 0: ##判断空值
-        messagebox.showerror(title='error', message='You forget to add the Website information.')
-    elif len(pw_input) == 0:
-        messagebox.showerror(title='error', message='You forget to add the Password information.')
+    is_ok = messagebox.askokcancel(title='Check Your Password', message=(f'Your password details are as follow: \nWebsite: {web_input} \nEmail: {email_input} \nPassword: {pw_input}  '))
+    ## Output of askokcancel pop-up is: Boolean
+    if is_ok:
+        if len(web_input) == 0: ##判断空值
+            messagebox.showerror(title='error', message='You forget to add the Website information.')
+        elif len(pw_input) == 0:
+            messagebox.showerror(title='error', message='You forget to add the Password information.')
 
-    # SAVE PASSWORD and CLEAR
-    else:
-        save_password(web_input, email_input, pw_input)
-        clean_out()
+        # SAVE PASSWORD and CLEAR
+        else:
+            save_password(web_input, email_input, pw_input)
+            clean_out()
 
 def clean_out():
     web_entry.delete(0,END)
@@ -149,7 +150,7 @@ web_entry.focus()  ## add curser
 web_entry.grid(column=1, row=1, columnspan=2, sticky=EW) # stciky=EW --align
 
 email_entry = Entry(width = 35)
-email_entry.insert(0, 'stella33299@gmail.com')  # pre-populated text
+email_entry.insert(0, '1234@gmail.com')  # pre-populated text
 email_entry.grid(column=1, row=2, columnspan=2, sticky=EW)
 
 pw_entry = Entry(width=18)
